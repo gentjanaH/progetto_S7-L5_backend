@@ -6,13 +6,13 @@ import gentjanahani.u7_l5.payloads.EventoDTO;
 import gentjanahani.u7_l5.payloads.EventoResponseDTO;
 import gentjanahani.u7_l5.services.EventoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/event")
@@ -31,4 +31,12 @@ public class EventoControllers {
         return this.eventoService.save(organizzatore, payload);
     }
 
+
+    //2. DELETE http://localhost:3026/event/{idEvento}
+    @PreAuthorize("hasAuthority('ORGANIZZATORE')")
+    @DeleteMapping("/{idEvento}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void findAndDelete(@AuthenticationPrincipal Utente organizzatore, @PathVariable UUID idEvento) {
+        this.eventoService.findAndDelete(organizzatore, idEvento);
+    }
 }

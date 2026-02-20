@@ -2,6 +2,8 @@ package gentjanahani.u7_l5.services;
 
 import gentjanahani.u7_l5.entities.Evento;
 import gentjanahani.u7_l5.entities.Utente;
+import gentjanahani.u7_l5.exceptions.NotFoundException;
+import gentjanahani.u7_l5.exceptions.UnautorizedException;
 import gentjanahani.u7_l5.payloads.EventoDTO;
 import gentjanahani.u7_l5.payloads.EventoResponseDTO;
 import gentjanahani.u7_l5.repository.EventoRepository;
@@ -10,6 +12,8 @@ import gentjanahani.u7_l5.security.SecurityConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 public class EventoService {
@@ -48,5 +52,13 @@ public class EventoService {
         return eventoDefinitivo;
     }
 
-    
+    public void findAndDelete(Utente organizzatore, UUID idEvento) {
+        Evento evento = eventoRepository.findByIdEvento(idEvento);
+        if (evento == null) throw new NotFoundException("evento non trovato");
+
+        if (!evento.getOrganizzatore().getIdUtente().equals(organizzatore.getIdUtente()))
+            throw new UnautorizedException("Non sei autorizzato a svolgere questa operazione");
+
+        eventoRepository.delete(evento);
+    }
 }
