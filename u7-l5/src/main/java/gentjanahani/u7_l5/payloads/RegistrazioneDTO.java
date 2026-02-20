@@ -15,7 +15,7 @@ public record RegistrazioneDTO(
         String mail,
         @NotBlank(message = "La password è obbligatoria")
         @Size(min = 8, message = "La password deve avere almeno 8 caratteri")
-        @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{4,}$", message = "La password deve contenere una maiuscola, una minuscola e almeno un carattere speciale")
+        @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$", message = "La password deve contenere una maiuscola, una minuscola e almeno un carattere speciale")
         String password,
         @NotNull
         Ruolo ruolo
