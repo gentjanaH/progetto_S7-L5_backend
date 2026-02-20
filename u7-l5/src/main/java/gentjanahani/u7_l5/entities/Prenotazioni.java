@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
@@ -19,6 +20,7 @@ public class Prenotazioni {
     @Setter(AccessLevel.NONE)
     private UUID idPrenotazione;
     private int numeroPosti;
+    LocalDate dataPrenotazione;
 
     //relazione manyToOne con utente
     @ManyToOne
@@ -29,4 +31,11 @@ public class Prenotazioni {
     @ManyToOne
     @JoinColumn(name = "idEvento")
     private Evento evento;
+
+    public Prenotazioni(int numeroPosti, LocalDate dataPrenotazione, Utente utente, Evento evento) {
+        this.numeroPosti = numeroPosti;
+        this.dataPrenotazione = dataPrenotazione;
+        this.utente = utente;
+        this.evento = evento;
+    }
 }

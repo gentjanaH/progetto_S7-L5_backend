@@ -124,4 +124,9 @@ public class EventoService {
 
         return risposta;
     }
+
+    public Evento findEvento(UUID idEvento) {
+        return eventoRepository.findById(idEvento)
+                .orElseThrow(() -> new NotFoundException("evento non trovato"));
+    }
 }
