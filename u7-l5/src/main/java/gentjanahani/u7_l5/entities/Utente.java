@@ -6,7 +6,11 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,7 +19,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Utente {
+public class Utente implements UserDetails {
 
     @Id
     @GeneratedValue
@@ -38,5 +42,15 @@ public class Utente {
         this.email = email;
         this.password = password;
         this.ruolo = ruolo;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(this.ruolo.name()));
+    }
+
+    @Override
+    public String getUsername() {
+        return "";
     }
 }
