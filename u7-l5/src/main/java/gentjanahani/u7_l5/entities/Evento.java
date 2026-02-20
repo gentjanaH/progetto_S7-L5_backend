@@ -27,15 +27,21 @@ public class Evento {
     private String luogo;
     private long postiDisponibili;
 
+    //relazione ManyToOne con l'organizzatore
+    @ManyToOne
+    @JoinColumn(name = "idOrganizzatore")
+    private Utente organizzatore;
+
     //relazione oneToMany con prenotazioni
     @OneToMany(mappedBy = "evento")
     private List<Prenotazioni> prenotazioni;
 
-    public Evento(String titolo, String descrizione, LocalDate data, String luogo, long postiDisponibili) {
+    public Evento(String titolo, String descrizione, LocalDate data, String luogo, long postiDisponibili, Utente organizzatore) {
         this.titolo = titolo;
         this.descrizione = descrizione;
         this.data = data;
         this.luogo = luogo;
         this.postiDisponibili = postiDisponibili;
+        this.organizzatore = organizzatore;
     }
 }

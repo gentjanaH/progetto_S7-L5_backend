@@ -31,7 +31,10 @@ public class Utente implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private Ruolo ruolo;
-
+    //relazione oneToMany con evento
+    @OneToMany(mappedBy = "organizzatore")
+    private List<Evento> eventiOrganizzati;
+    
     //relazione oneToMany con prenotazioni
     @OneToMany(mappedBy = "utente")
     private List<Prenotazioni> prenotazioni;
